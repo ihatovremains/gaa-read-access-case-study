@@ -147,6 +147,8 @@
     .results .summary { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font: 600 1.02rem/1.25 var(--sans); letter-spacing: 0; }
     .metric { font: 540 clamp(2.4rem, 4.3vw, 3.3rem)/1 var(--display); letter-spacing: -.06em; }
     .results p { font-size: .98rem; line-height: 1.6; margin-top: 10px; max-width: 62ch; }
+    .pdf-link { color: var(--ink); font-weight: 600; text-underline-offset: .2em; }
+    .print-caption { display: none; }
     footer { display: flex; justify-content: space-between; gap: 16px; margin-top: 36px; border-top: 1px solid var(--line); padding: 12px 0 30px; color: var(--secondary); font-size: .8rem; }
 
     @media screen and (max-width: 1060px) {
@@ -197,6 +199,8 @@
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .hero { color: var(--ink); background: #fff; }
       .hero::after, .replay, .dot, .ticket { display: none !important; }
+      .screen-caption, .pdf-action { display: none; }
+      .print-caption { display: inline; }
       [data-c], .panel { opacity: 1 !important; }
       .wrap { max-width: none; padding: 0; }
       .topbar { padding: 0 0 8pt; border-bottom: 1px solid var(--line); }
@@ -267,7 +271,7 @@
             <ol aria-label="Request path for both calls">
               <li><strong>Acme reader</strong> The same reader signs in with Keycloak and calls <code>get_order_status</code> twice.</li>
               <li><strong>agentgateway</strong> Exchanges the token with Keycloak and forwards both calls over mutual TLS.</li>
-              <li><strong>Orders API</strong> Checks the tenant and the reader’s assigned orders. Records the decision before responding.</li>
+              <li><strong>Orders API</strong> Checks the tenant and the reader’s assigned orders. It is designed to record the decision before responding.</li>
             </ol>
             <table aria-label="Orders API decision and reader result for each call">
               <thead><tr><th scope="col">Call and order</th><th scope="col">Orders API decision</th><th scope="col">Reader receives</th></tr></thead>
@@ -299,7 +303,7 @@
             <span class="dot"></span>
           </div>
 
-          <figcaption>Both calls returned HTTP 200 at the MCP layer. A third request (R07) used a nonexistent order ID and yielded the same error body as R05. The reader could not tell which order existed from those responses. The animation illustrates the recorded R03 and R05 results.</figcaption>
+          <figcaption>Both calls returned HTTP 200 at the MCP layer. A third request (R07) used a nonexistent order ID and yielded the same error body as R05. The reader could not tell which order existed from those responses. <span class="screen-caption">The animation illustrates the recorded R03 and R05 results.</span><span class="print-caption">The table shows the recorded results for R03 and R05.</span></figcaption>
         </figure>
       </div>
     </div>
@@ -310,6 +314,8 @@
       <div>
         <h2 class="summary"><span class="metric">24/25</span> test cases passed</h2>
         <p>One local run on <time datetime="2026-10-30">October 30, 2026</time>. The passing cases also covered invalid tokens, client certificates and blocked direct access to the internal API.</p>
+        <p>This case study summarizes the local run. The prototype’s source code and the original run records are private.</p>
+        <p class="pdf-action"><a class="pdf-link" href="gaa-read-access-case-study.pdf" type="application/pdf">Read the one-page PDF</a></p>
       </div>
       <div>
         <h2>One case remained unverified</h2>
